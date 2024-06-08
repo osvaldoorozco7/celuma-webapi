@@ -1,7 +1,6 @@
 package com.celuma.webapi.domain;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class OrderDTO {
 
