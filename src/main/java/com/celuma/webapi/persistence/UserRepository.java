@@ -30,8 +30,9 @@ public class UserRepository implements UserDTORepository {
         return mapper.toUserDTO(userCrudRepository.save(user));
     }
 
-
-
-
-
+    public boolean getUserByEmail(String email, String password) {
+        // User user = userCrudRepository.getByEmailAndPassword(email, password);
+        User user = new User();
+        return user != null;
+    }
 }
