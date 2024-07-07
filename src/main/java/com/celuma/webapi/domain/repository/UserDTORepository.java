@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserDTORepository {
     UserDTO save(UserDTO userDTO);
     List<UserDTO> getAll();
-    boolean getUserByEmail(String email, String password);
+    UserDTO getUserByUsername(String username);
 }

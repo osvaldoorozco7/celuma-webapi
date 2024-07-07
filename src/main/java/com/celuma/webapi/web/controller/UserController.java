@@ -28,8 +28,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody UserLoginRequest request) {
-        return userService.login(request);
+    public ResponseEntity<Boolean> login(@RequestBody UserLoginRequest request) {
+        try{
+            return new ResponseEntity<>(userService.login(request), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/register")
