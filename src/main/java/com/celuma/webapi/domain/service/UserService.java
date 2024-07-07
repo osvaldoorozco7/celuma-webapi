@@ -7,6 +7,7 @@ import com.celuma.webapi.security.CustomUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +42,18 @@ public class UserService {
         return userDTORepository.getAll();
     }
 
-    public boolean login(UserLoginRequest userLoginDto) {
-        UserDetails userdetails = userDetailsService.loadUserByUsername(userLoginDto.getUsername());
-        return passwordEncoder.matches(userLoginDto.getPassword(), userdetails.getPassword());
+    public UserDTO login(UserLoginRequest userLoginDto) {
+        try {
+            UserDetails userdetails = userDetailsService.loadUserByUsername(userLoginDto.getUsername());
+            if (passwordEncoder.matches(userLoginDto.getPassword(), userdetails.getPassword())) {
+                return userDTORepository.getUserByUsername(userdetails.getUsername());
+            } else {
+                throw new UsernameNotFoundException("Incorrect password.");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
