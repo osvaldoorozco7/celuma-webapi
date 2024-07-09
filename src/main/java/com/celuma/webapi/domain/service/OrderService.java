@@ -3,7 +3,6 @@ package com.celuma.webapi.domain.service;
 import com.celuma.webapi.domain.OrderDTO;
 import com.celuma.webapi.domain.OrderDetailDTO;
 import com.celuma.webapi.domain.repository.OrderRepository;
-import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

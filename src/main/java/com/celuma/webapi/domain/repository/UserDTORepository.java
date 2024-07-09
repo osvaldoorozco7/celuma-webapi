@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface UserDTORepository {
     UserDTO save(UserDTO userDTO);
-
     List<UserDTO> getAll();
+    UserDTO getUserByUsername(String username);
 }

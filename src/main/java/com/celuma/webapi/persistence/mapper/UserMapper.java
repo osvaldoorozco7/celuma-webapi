@@ -13,12 +13,12 @@ import java.util.List;
 public interface UserMapper {
 
     @Mappings({
-            @Mapping(source = "idUser", target = "userId"),
-            @Mapping(source = "typeUser", target = "userType"),
-            @Mapping(source = "nameFirst", target = "firstName"),
-            @Mapping(source = "nameLast", target = "lastName"),
-            @Mapping(source = "nameuser", target = "username"),
-            @Mapping(source = "mail", target = "email"),
+            @Mapping(source = "id", target = "userId"),
+            @Mapping(source = "userType", target = "userType"),
+            @Mapping(source = "firstName", target = "firstName"),
+            @Mapping(source = "lastName", target = "lastName"),
+            @Mapping(source = "username", target = "username"),
+            @Mapping(source = "email", target = "email"),
     })
     UserDTO toUserDTO(User user);
 

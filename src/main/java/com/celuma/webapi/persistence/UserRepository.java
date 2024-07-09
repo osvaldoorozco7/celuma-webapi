@@ -30,8 +30,9 @@ public class UserRepository implements UserDTORepository {
         return mapper.toUserDTO(userCrudRepository.save(user));
     }
 
-
-
-
-
+    // TODO: Remove password from response model
+    public UserDTO getUserByUsername(String username) {
+        User user = userCrudRepository.getByUsername(username);
+        return mapper.toUserDTO(user);
+    }
 }

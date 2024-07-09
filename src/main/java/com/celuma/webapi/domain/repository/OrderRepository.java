@@ -2,7 +2,6 @@ package com.celuma.webapi.domain.repository;
 
 import com.celuma.webapi.domain.OrderDTO;
 import com.celuma.webapi.domain.OrderDetailDTO;
-import jakarta.persistence.criteria.Order;
 
 import java.util.List;
 import java.util.Optional;

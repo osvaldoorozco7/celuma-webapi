@@ -9,71 +9,81 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer idUser;
+    private Integer id;
 
     @Column(name = "user_type")
-    private Integer typeUser;
+    private Integer userType;
 
     @Column(name = "first_name")
-    private String nameFirst;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String nameLast;
+    private String lastName;
 
     @Column(name = "username")
-    private String nameuser;
+    private String username;
 
     @Column(name = "email")
-    private String mail;
+    private String email;
+
+    @Column(name = "password")
+    private String password;
 
     // Getters and setter
 
 
-    public Integer getIdUser() {
-        return idUser;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getTypeUser() {
-        return typeUser;
+    public Integer getUserType() {
+        return userType;
     }
 
-    public void setTypeUser(Integer typeUser) {
-        this.typeUser = typeUser;
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
-    public String getNameFirst() {
-        return nameFirst;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNameFirst(String nameFirst) {
-        this.nameFirst = nameFirst;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getNameLast() {
-        return nameLast;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setNameLast(String nameLast) {
-        this.nameLast = nameLast;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getNameuser() {
-        return nameuser;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNameuser(String nameuser) {
-        this.nameuser = nameuser;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
