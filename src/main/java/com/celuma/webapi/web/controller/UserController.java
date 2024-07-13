@@ -3,6 +3,7 @@ package com.celuma.webapi.web.controller;
 import com.celuma.webapi.domain.UserDTO;
 import com.celuma.webapi.domain.request_models.UserLoginRequest;
 import com.celuma.webapi.domain.request_models.UserRegistrationRequest;
+import com.celuma.webapi.domain.response_models.UserLoginResponse;
 import com.celuma.webapi.domain.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody UserLoginRequest request) {
+    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest request) {
         try{
-            return new ResponseEntity<UserDTO>(userService.login(request), HttpStatus.OK);
+            return new ResponseEntity<UserLoginResponse>(userService.login(request), HttpStatus.OK);
         } catch (UsernameNotFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

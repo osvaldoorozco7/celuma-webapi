@@ -3,6 +3,9 @@ package com.celuma.webapi.domain.service;
 import com.celuma.webapi.domain.UserDTO;
 import com.celuma.webapi.domain.repository.UserDTORepository;
 import com.celuma.webapi.domain.request_models.UserLoginRequest;
+import com.celuma.webapi.domain.response_models.UserLoginResponse;
+import com.celuma.webapi.persistence.entity.User;
+import com.celuma.webapi.persistence.mapper.UserMapper;
 import com.celuma.webapi.security.CustomUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,8 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     private CustomUserDetailsService userDetailsService;
-
+    @Autowired
+    private UserMapper mapper;
 
     public UserService(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -39,14 +43,21 @@ public class UserService {
     }
 
     public List<UserDTO> getAll() {
-        return userDTORepository.getAll();
+        try {
+            List<User> users = userDTORepository.getAll();
+            return mapper.toUsersDTO(users);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
-    public UserDTO login(UserLoginRequest userLoginDto) {
+    public UserLoginResponse login(UserLoginRequest userLoginDto) {
         try {
             UserDetails userdetails = userDetailsService.loadUserByUsername(userLoginDto.getUsername());
             if (passwordEncoder.matches(userLoginDto.getPassword(), userdetails.getPassword())) {
-                return userDTORepository.getUserByUsername(userdetails.getUsername());
+                User user = userDTORepository.getUserByUsername(userdetails.getUsername());
+                return mapper.toLoginResponse(user);
             } else {
                 throw new UsernameNotFoundException("Incorrect password.");
             }
