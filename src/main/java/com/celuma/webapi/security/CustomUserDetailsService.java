@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.celuma.webapi.domain.UserDTO;
 import com.celuma.webapi.domain.repository.UserDTORepository;
 
 @Service
@@ -20,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDTO user = userRepository.getUserByUsername(username);
+        com.celuma.webapi.persistence.entity.User user = userRepository.getUserByUsername(username);
         if(user == null) {
             throw new UsernameNotFoundException("Username not found.");
         }

@@ -19,20 +19,20 @@ public class UserRepository implements UserDTORepository {
     private UserMapper mapper;
 
     @Override
-    public List<UserDTO> getAll() {
+    public List<User> getAll() {
         List<User> users = (List<User>) userCrudRepository.findAll();
-        return mapper.toUsersDTO(users);
+        return users;
     }
 
     @Override
-    public UserDTO save(UserDTO userDTO) {
+    public User save(UserDTO userDTO) {
         User user = mapper.toUser(userDTO);
-        return mapper.toUserDTO(userCrudRepository.save(user));
+        userCrudRepository.save(user);
+        return user;
     }
 
-    // TODO: Remove password from response model
-    public UserDTO getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         User user = userCrudRepository.getByUsername(username);
-        return mapper.toUserDTO(user);
+        return user;
     }
 }
