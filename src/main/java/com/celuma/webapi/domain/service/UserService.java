@@ -7,6 +7,7 @@ import com.celuma.webapi.domain.response_models.UserLoginResponse;
 import com.celuma.webapi.persistence.entity.User;
 import com.celuma.webapi.persistence.mapper.UserMapper;
 import com.celuma.webapi.security.CustomUserDetailsService;
+import com.celuma.webapi.utilities.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,8 @@ public class UserService {
     private UserDTORepository userDTORepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtUtil jwtUtil;
     private CustomUserDetailsService userDetailsService;
     @Autowired
     private UserMapper mapper;
@@ -57,7 +60,10 @@ public class UserService {
             UserDetails userdetails = userDetailsService.loadUserByUsername(userLoginDto.getUsername());
             if (passwordEncoder.matches(userLoginDto.getPassword(), userdetails.getPassword())) {
                 User user = userDTORepository.getUserByUsername(userdetails.getUsername());
-                return mapper.toLoginResponse(user);
+                UserLoginResponse autheticatedUser = mapper.toLoginResponse(user);
+                String jwt = jwtUtil.generateToken(autheticatedUser.getUsername());
+                autheticatedUser.setJwt(jwt);
+                return autheticatedUser;
             } else {
                 throw new UsernameNotFoundException("Incorrect password.");
             }
