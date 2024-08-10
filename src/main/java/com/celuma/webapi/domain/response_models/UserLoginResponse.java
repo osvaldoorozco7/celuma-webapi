@@ -8,6 +8,7 @@ public class UserLoginResponse {
     private String lastName;
     private String username;
     private String email;
+    private String jwt;
 
     public Integer getid() {
         return id;
@@ -45,4 +46,10 @@ public class UserLoginResponse {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getJwt() {
+        return jwt;
+    }
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }    
 }
