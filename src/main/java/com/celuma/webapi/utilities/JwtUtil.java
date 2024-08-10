@@ -8,18 +8,25 @@ import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
 
 @Component
 public class JwtUtil {
     
-    // Hardcoded key => need to create one for requests
-    private SecretKey secretKey = Jwts.SIG.HS256.key().build();
+    // Hardcoded key
+    private String jwtSectret = "9D4D3BE5C3ED92AF12EB6B473E1B7CD6EB523736B6FC96A5AB5495D3A6";
+
+    private SecretKey getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(jwtSectret);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
             .subject(username)
-            .signWith(secretKey)
+            .signWith(getSigningKey())
             .compact();
     }
 
@@ -41,7 +48,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+        return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
     }
     
     private boolean isTokenExpired(String token) {
