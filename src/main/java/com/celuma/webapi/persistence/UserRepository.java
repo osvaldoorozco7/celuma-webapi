@@ -35,4 +35,9 @@ public class UserRepository implements UserDTORepository {
         User user = userCrudRepository.getByUsername(username);
         return user;
     }
+
+    public User getUserByEmail(String email) {
+        User user = userCrudRepository.getByEmail(email);
+        return user;
+    }
 }

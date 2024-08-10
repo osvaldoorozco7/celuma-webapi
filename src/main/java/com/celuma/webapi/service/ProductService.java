@@ -1,4 +1,4 @@
-package com.celuma.webapi.domain.service;
+package com.celuma.webapi.service;
 
 import com.celuma.webapi.domain.ProductDTO;
 import com.celuma.webapi.domain.ProductDetailDTO;

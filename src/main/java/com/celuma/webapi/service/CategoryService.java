@@ -1,4 +1,4 @@
-package com.celuma.webapi.domain.service;
+package com.celuma.webapi.service;
 
 import com.celuma.webapi.domain.Category;
 import com.celuma.webapi.domain.repository.CategoryRepository;
