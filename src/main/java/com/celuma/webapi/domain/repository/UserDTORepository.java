@@ -9,4 +9,5 @@ public interface UserDTORepository {
     User save(UserDTO userDTO);
     List<User> getAll();
     User getUserByUsername(String username);
+    User getUserByEmail(String email);
 }

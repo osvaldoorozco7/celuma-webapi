@@ -2,7 +2,8 @@ package com.celuma.webapi.web.controller;
 
 import com.celuma.webapi.domain.OrderDTO;
 import com.celuma.webapi.domain.OrderDetailDTO;
-import com.celuma.webapi.domain.service.OrderService;
+import com.celuma.webapi.service.OrderService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

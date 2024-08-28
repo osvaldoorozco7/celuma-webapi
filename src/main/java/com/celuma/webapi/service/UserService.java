@@ -1,4 +1,4 @@
-package com.celuma.webapi.domain.service;
+package com.celuma.webapi.service;
 
 import com.celuma.webapi.domain.UserDTO;
 import com.celuma.webapi.domain.repository.UserDTORepository;
@@ -8,6 +8,8 @@ import com.celuma.webapi.persistence.entity.User;
 import com.celuma.webapi.persistence.mapper.UserMapper;
 import com.celuma.webapi.security.CustomUserDetailsService;
 import com.celuma.webapi.utilities.JwtUtil;
+
+import jakarta.persistence.EntityExistsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +40,12 @@ public class UserService {
         try {
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             userDTO.setUserType(3); // Hardcoding user type: user
+            if(userDTORepository.getUserByUsername(userDTO.getUsername()) != null) {
+                throw new EntityExistsException("Username already in use.");
+            }
+            if(userDTORepository.getUserByEmail(userDTO.getEmail()) != null) {
+                throw new EntityExistsException("Email already in use.");
+            } 
             userDTORepository.save(userDTO);
         } catch (Exception e) {
             e.printStackTrace();

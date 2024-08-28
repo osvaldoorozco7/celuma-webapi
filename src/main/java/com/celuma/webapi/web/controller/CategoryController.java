@@ -1,7 +1,8 @@
 package com.celuma.webapi.web.controller;
 
 import com.celuma.webapi.domain.Category;
-import com.celuma.webapi.domain.service.CategoryService;
+import com.celuma.webapi.service.CategoryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
