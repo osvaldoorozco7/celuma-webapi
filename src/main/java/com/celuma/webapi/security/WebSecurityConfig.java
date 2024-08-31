@@ -3,7 +3,10 @@ package com.celuma.webapi.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +17,7 @@ import com.celuma.webapi.domain.repository.UserDTORepository;
 import com.celuma.webapi.web.filters.JwtRequestFilter;
 
 @Configuration
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Autowired
@@ -29,16 +33,19 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(requests -> requests
-                    .anyRequest()
-                    .permitAll());
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .requestMatchers("/users/login").permitAll()
+                .requestMatchers("/users/register").permitAll()
+                .anyRequest().authenticated())
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
-    UserDetailsService userDetailsService () {
+    UserDetailsService userDetailsService() {
         return new CustomUserDetailsService(userRepository);
     }
 
