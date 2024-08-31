@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserLoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest request) {
         try{
             return new ResponseEntity<UserLoginResponse>(userService.login(request), HttpStatus.OK);
         } catch (UsernameNotFoundException e) {
