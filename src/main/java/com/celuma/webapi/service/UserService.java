@@ -3,6 +3,8 @@ package com.celuma.webapi.service;
 import com.celuma.webapi.domain.UserDTO;
 import com.celuma.webapi.domain.repository.UserDTORepository;
 import com.celuma.webapi.domain.request_models.UserLoginRequest;
+import com.celuma.webapi.domain.request_models.UserUpdatePasswordRequest;
+import com.celuma.webapi.domain.request_models.UserUpdateRequest;
 import com.celuma.webapi.domain.response_models.UserLoginResponse;
 import com.celuma.webapi.persistence.entity.User;
 import com.celuma.webapi.persistence.mapper.UserMapper;
@@ -10,6 +12,7 @@ import com.celuma.webapi.security.CustomUserDetailsService;
 import com.celuma.webapi.utilities.JwtUtil;
 
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,27 +39,27 @@ public class UserService {
         this.userDetailsService = userDetailsService;
     }
 
-    public void save(UserDTO userDTO) {
+    public List<UserDTO> getAll() {
         try {
-            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            userDTO.setUserType(3); // Hardcoding user type: user
-            if(userDTORepository.getUserByUsername(userDTO.getUsername()) != null) {
-                throw new EntityExistsException("Username already in use.");
-            }
-            if(userDTORepository.getUserByEmail(userDTO.getEmail()) != null) {
-                throw new EntityExistsException("Email already in use.");
-            } 
-            userDTORepository.save(userDTO);
+            List<User> users = userDTORepository.getAll();
+            return mapper.toUsersDTO(users);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
     }
 
-    public List<UserDTO> getAll() {
+    public void save(UserDTO userDTO) {
         try {
-            List<User> users = userDTORepository.getAll();
-            return mapper.toUsersDTO(users);
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            userDTO.setUserType(3); // Hardcoding user type: user
+            if (userDTORepository.getUserByUsername(userDTO.getUsername()) != null) {
+                throw new EntityExistsException("Username already in use.");
+            }
+            if (userDTORepository.getUserByEmail(userDTO.getEmail()) != null) {
+                throw new EntityExistsException("Email already in use.");
+            }
+            userDTORepository.save(userDTO);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -75,10 +78,36 @@ public class UserService {
             } else {
                 throw new UsernameNotFoundException("Incorrect password.");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
+        }
+    }
+
+    // Personal information update
+    public boolean update(UserUpdateRequest userUpdateRequest) {
+        try {
+            User userToUpdate = userDTORepository.getById(userUpdateRequest.getUserId());
+            userToUpdate.setFirstName(userUpdateRequest.getFirstName());
+            userToUpdate.setLastName(userUpdateRequest.getLastName());
+            userDTORepository.save(userToUpdate);
+            return true;
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("User with id " + userUpdateRequest.getUserId() + " does not exist.");
+        }
+    }
+
+    public boolean update(UserUpdatePasswordRequest passwordRequest) {
+        try {
+            User userToUpdate = userDTORepository.getById(passwordRequest.getUserId());
+            if(passwordEncoder.matches(passwordRequest.getCurrentPassword(), userToUpdate.getPassword())) {
+                userToUpdate.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
+                userDTORepository.save(userToUpdate);
+                return true;
+            }
+            return false;
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("User with id " + passwordRequest.getUserId() + " does not exist.");
         }
     }
 }

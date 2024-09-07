@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepository implements UserDTORepository {
@@ -31,6 +32,11 @@ public class UserRepository implements UserDTORepository {
         return user;
     }
 
+    @Override
+    public void save(User user) {
+        userCrudRepository.save(user);
+    }
+
     public User getUserByUsername(String username) {
         User user = userCrudRepository.getByUsername(username);
         return user;
@@ -39,5 +45,11 @@ public class UserRepository implements UserDTORepository {
     public User getUserByEmail(String email) {
         User user = userCrudRepository.getByEmail(email);
         return user;
+    }
+
+    @Override
+    public User getById(int id) {
+        Optional<User> user = userCrudRepository.findById(id);
+        return user.get();
     }
 }
