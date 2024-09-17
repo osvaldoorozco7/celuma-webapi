@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@CrossOrigin("http://localhost:3000/")
+
 @RequestMapping("/users")
 public class UserController {
 
@@ -32,12 +33,14 @@ public class UserController {
 
     @GetMapping("/all")
     public List<UserDTO> getAll() {
+        System.out.println("Todos los usuarios");
         return userService.getAll();
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest request) {
         try {
+            System.out.println("Hola");
             return new ResponseEntity<UserLoginResponse>(userService.login(request), HttpStatus.OK);
         } catch (UsernameNotFoundException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -97,5 +100,10 @@ public class UserController {
             return new ResponseEntity<String>("There was a problem processing your request: " + e.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean delete(@PathVariable("id") int productId) {
+        return userService.delete(productId);
     }
 }

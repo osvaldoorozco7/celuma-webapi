@@ -12,4 +12,5 @@ public interface UserDTORepository {
     User getUserByUsername(String username);
     User getUserByEmail(String email);
     User getById(int id);
+    void delete(int userId);
 }

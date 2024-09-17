@@ -84,6 +84,16 @@ public class UserService {
         }
     }
 
+    public boolean delete(int userId) {
+        try {
+            userDTORepository.delete(userId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    };
+
     // Personal information update
     public boolean update(UserUpdateRequest userUpdateRequest) {
         try {
@@ -110,4 +120,5 @@ public class UserService {
             throw new EntityNotFoundException("User with id " + passwordRequest.getUserId() + " does not exist.");
         }
     }
+
 }
