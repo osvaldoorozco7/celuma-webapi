@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000/")
 
 @RequestMapping("/users")
 public class UserController {
@@ -103,7 +103,9 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable("id") int productId) {
-        return userService.delete(productId);
+    @CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.DELETE})
+    public boolean delete(@PathVariable("id") int userId) {
+        return userService.delete(userId);
     }
+
 }
