@@ -52,4 +52,9 @@ public class UserRepository implements UserDTORepository {
         Optional<User> user = userCrudRepository.findById(id);
         return user.get();
     }
+
+    @Override
+    public void delete(int userId) {
+        userCrudRepository.deleteById(userId);
+    }
 }

@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@CrossOrigin(origins = "http://localhost:3000/")
+
 @RequestMapping("/users")
 public class UserController {
 
@@ -32,12 +33,14 @@ public class UserController {
 
     @GetMapping("/all")
     public List<UserDTO> getAll() {
+        System.out.println("Todos los usuarios");
         return userService.getAll();
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest request) {
         try {
+            System.out.println("Hola");
             return new ResponseEntity<UserLoginResponse>(userService.login(request), HttpStatus.OK);
         } catch (UsernameNotFoundException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -98,4 +101,11 @@ public class UserController {
                 HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.DELETE})
+    public boolean delete(@PathVariable("id") int userId) {
+        return userService.delete(userId);
+    }
+
 }
