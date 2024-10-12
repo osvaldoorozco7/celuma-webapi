@@ -18,6 +18,11 @@ public class UserUpdateRequest {
     @NotEmpty(message = "Last name must not be empty.")
     private String lastName;
 
+    @NotNull(message = "Email is a required field.")
+    @NotBlank(message = "Email must not be blank.")
+    @NotEmpty(message = "Email must not be empty.")
+    private String email;
+
     public int getUserId() {
         return userId;
     }
@@ -35,5 +40,12 @@ public class UserUpdateRequest {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
