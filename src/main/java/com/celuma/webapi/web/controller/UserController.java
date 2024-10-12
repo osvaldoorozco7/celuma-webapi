@@ -33,8 +33,13 @@ public class UserController {
 
     @GetMapping("/all")
     public List<UserDTO> getAll() {
-        System.out.println("Todos los usuarios");
         return userService.getAll();
+    }
+
+    @GetMapping("/{userId}/user")
+    public UserDTO getUser(@RequestBody @PathVariable int userId) {
+
+        return userService.getUser(userId);
     }
 
     @PostMapping("/login")
