@@ -49,6 +49,16 @@ public class UserService {
         }
     }
 
+    public UserDTO getUser(int userId) {
+        try {
+            User user = userDTORepository.getById(userId);
+            return  mapper.toUserDTO(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
     public void save(UserDTO userDTO) {
         try {
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
