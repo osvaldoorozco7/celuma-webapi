@@ -102,9 +102,9 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{userId}/delete")
     @CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.DELETE})
-    public boolean delete(@PathVariable("id") int userId) {
+    public boolean delete(@PathVariable("userId") int userId) {
         return userService.delete(userId);
     }
 

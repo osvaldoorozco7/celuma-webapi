@@ -100,6 +100,7 @@ public class UserService {
             User userToUpdate = userDTORepository.getById(userUpdateRequest.getUserId());
             userToUpdate.setFirstName(userUpdateRequest.getFirstName());
             userToUpdate.setLastName(userUpdateRequest.getLastName());
+            userToUpdate.setEmail(userUpdateRequest.getEmail());
             userDTORepository.save(userToUpdate);
             return true;
         } catch (EntityNotFoundException e) {
