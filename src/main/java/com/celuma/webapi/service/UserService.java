@@ -118,6 +118,7 @@ public class UserService {
         }
     }
 
+    // Password update
     public boolean update(UserUpdatePasswordRequest passwordRequest) {
         try {
             User userToUpdate = userDTORepository.getById(passwordRequest.getUserId());

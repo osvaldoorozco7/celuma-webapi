@@ -12,8 +12,8 @@ public interface ProductoCrudRepository extends CrudRepository<Producto, Integer
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE products SET name = ?1, category_id = ?2, content = ?3 WHERE product_id = ?4", nativeQuery = true)
-    int updateProduct(String name, Integer categoryId, String content, Integer id);
+    @Query(value = "UPDATE products SET name = ?1, content = ?2, category_id = ?3 WHERE product_id = ?4" , nativeQuery = true)
+    int updateProduct(String name, String content, Integer category, Integer id);
 
 
 }

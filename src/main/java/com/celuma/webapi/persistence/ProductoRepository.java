@@ -45,11 +45,11 @@ public class ProductoRepository implements ProductRepository {
     public void updateProduct(ProductDTO productDTO) {
         Producto producto = mapper.toProducto(productDTO);
         String name = producto.getNombre();
-        Integer category = producto.getIdCategoria();
         String content = producto.getContenido();
         Integer id = producto.getIdProducto();
+        Integer category = producto.getIdCategoria();
 
-        productoCrudRepository.updateProduct(name, category, content, id);
+        productoCrudRepository.updateProduct(name, content, category, id);
     }
 
 }
