@@ -12,7 +12,7 @@ public interface ProductRepository {
 
     Optional<ProductDetailDTO> getProduct(int productId);
 
-    ProductDTO save(ProductDTO productDTO);
+    void save(ProductDTO productDTO);
 
     void delete(int productId);
 
