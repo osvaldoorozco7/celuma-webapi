@@ -7,6 +7,7 @@ import com.celuma.webapi.domain.request_models.NewProductRequest;
 import com.celuma.webapi.persistence.entity.Producto;
 import com.celuma.webapi.persistence.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,18 +32,16 @@ public class ProductService {
         return productRepository.getProduct(productId);
     }
 
-    public void save(NewProductRequest request) {
-        Producto producto = new Producto();
+    public void save(ProductDTO productDTO) {
+        Producto producto = mapper.toProducto(productDTO);
 
-        producto.setNombre(request.getName());
-        producto.setContenido(request.getContent());
-        producto.setIdCategoria(request.getCategory());
+        try {
+            productRepository.save(producto);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error interacting with the database", e);
+        }
 
-        producto.setInstrucciones(request.getInstructions() != null ? request.getInstructions() : "");
-        producto.setPrecauciones(request.getCautions() != null ? request.getCautions() : " ");
-
-        productRepository.save(mapper.toProduct(producto));
-    }
+    };
 
     public Boolean delete(int productId) {
         return getProduct(productId).map(product -> {productRepository.delete(productId);

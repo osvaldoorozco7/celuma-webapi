@@ -7,6 +7,7 @@ import com.celuma.webapi.domain.request_models.NewProductRequest;
 import com.celuma.webapi.persistence.entity.Producto;
 import com.celuma.webapi.service.ProductService;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,10 +39,24 @@ public class ProductController {
         return productService.getProduct(productId);
     }
 
-    @PostMapping("/new-product")
+    @PostMapping()
     public ResponseEntity<String> newProduct(@Valid @RequestBody NewProductRequest request) {
-        productService.save(request);
-        return ResponseEntity.ok("Product successfully created");
+        try {
+            ProductDTO productDTO = new ProductDTO();
+
+            productDTO.setName(request.getName());
+            productDTO.setContent(request.getContent());
+            productDTO.setCategoryId(request.getCategory());
+            productDTO.setCautions(Optional.ofNullable(request.getCautions()).orElse(""));
+            productDTO.setInstructions(Optional.ofNullable(request.getInstructions()).orElse(""));
+
+            productService.save(productDTO);
+            return ResponseEntity.ok("Product successfully created");
+        } catch (EntityExistsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return  new ResponseEntity<>("There was a problem" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     };
 
     @DeleteMapping("/delete/{id}")

@@ -30,8 +30,8 @@ public class ProductoRepository implements ProductRepository {
     }
 
     @Override
-    public void save(ProductDTO product) {
-        productoCrudRepository.save(mapper.toProducto(product));
+    public void save(Producto product) {
+        productoCrudRepository.save(product);
     }
 
     @Override
