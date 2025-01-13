@@ -28,7 +28,7 @@ public class Producto {
     @Column(name = "cautions")
     private String precauciones;
 
-    @Column(name = "is_deleted")
+    @Column( name = "is_deleted")
     private Boolean estado;
 
     @ManyToOne
