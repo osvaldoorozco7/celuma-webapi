@@ -45,7 +45,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest request) {
         try {
-            System.out.println("Hola");
             return new ResponseEntity<UserLoginResponse>(userService.login(request), HttpStatus.OK);
         } catch (UsernameNotFoundException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);

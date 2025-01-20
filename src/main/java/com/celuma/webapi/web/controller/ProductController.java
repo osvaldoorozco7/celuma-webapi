@@ -2,12 +2,11 @@ package com.celuma.webapi.web.controller;
 
 import com.celuma.webapi.domain.ProductDTO;
 import com.celuma.webapi.domain.ProductDetailDTO;
-import com.celuma.webapi.domain.UserDTO;
 import com.celuma.webapi.domain.request_models.NewProductRequest;
-import com.celuma.webapi.persistence.entity.Producto;
 import com.celuma.webapi.service.ProductService;
 
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,8 +59,17 @@ public class ProductController {
     };
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") int productId) {
-        productService.delete(productId);
+    public ResponseEntity<String> delete(@PathVariable("id") int productId) {
+
+        try {
+            productService.delete(productId);
+        } catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found: " + e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+        return null;
     }
 
     @PatchMapping("/update")
