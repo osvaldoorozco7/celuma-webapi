@@ -45,6 +45,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/users/login").permitAll()
                         .requestMatchers("/users/register").permitAll()
+                        .requestMatchers("/products/all").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
