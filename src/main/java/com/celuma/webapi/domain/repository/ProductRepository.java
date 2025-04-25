@@ -18,4 +18,6 @@ public interface ProductRepository {
     void delete(int productId);
 
     void updateProduct(ProductDTO productDTO);
+
+    void uploadImage(ProductDTO productDTO);
 }

@@ -21,6 +21,7 @@ public interface ProductMapper {
             @Mapping(source = "instrucciones", target = "instructions"),
             @Mapping(source = "precauciones", target = "cautions"),
             @Mapping(source = "estado", target = "active"),
+            @Mapping(source = "urlImagen", target = "imageUrl"),
             @Mapping(source = "categorias", target = "category"),
 
     })
@@ -34,6 +35,7 @@ public interface ProductMapper {
             @Mapping(source = "instrucciones", target = "instructions"),
             @Mapping(source = "precauciones", target = "cautions"),
             @Mapping(source = "estado", target = "active"),
+            @Mapping(source = "urlImagen", target = "imageUrl"),
 
     })
     ProductDTO toProduct(Producto producto);

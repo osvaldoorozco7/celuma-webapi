@@ -1,5 +1,7 @@
 package com.celuma.webapi.persistence.entity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -12,6 +14,7 @@ public class ProductoOrden implements Serializable {
     @Column(name = "product_order_id")
     private Integer id;
 
+
     @Column(name = "products_quantity")
     private Integer cantidad;
 
@@ -23,7 +26,9 @@ public class ProductoOrden implements Serializable {
     @JoinColumn(name = "order_id", updatable = false, insertable = false)
     private Orden orden;
 
+
     // Getters and Setters
+
 
     public Integer getId() {
         return id;

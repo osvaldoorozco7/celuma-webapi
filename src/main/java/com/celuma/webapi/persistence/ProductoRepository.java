@@ -50,4 +50,9 @@ public class ProductoRepository implements ProductRepository {
         productoCrudRepository.updateProduct(name, content, category, id);
     }
 
+    @Override
+    public void uploadImage(ProductDTO productDTO) {
+        productoCrudRepository.updateImage(productDTO.getImageUrl(), productDTO.getProductId());
+    }
+
 }

@@ -10,8 +10,8 @@ public interface ProductOrderMapper {
     @Mappings({
             @Mapping(source = "id", target = "productOrderId"),
             @Mapping(source = "cantidad", target = "quantity"),
-            @Mapping(source = "producto", target = "product"),
-            @Mapping(source = "orden", target = "order")
+            @Mapping(source = "producto", target = "productDTO"),
+            @Mapping(source = "orden", target = "orderDetailDTO")
     })
     ProductOrder toProductOrder (ProductoOrden productoOrden);
 

@@ -1,6 +1,8 @@
 package com.celuma.webapi.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +14,7 @@ public class Orden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Integer IdOrden;
+    private Integer idOrden;
 
     @Column(name = "creation_date")
     private LocalDateTime fechaCreacion;
@@ -29,14 +31,15 @@ public class Orden {
     @OneToOne(mappedBy = "orden")
     private Sale sale;
 
-    // Getters and Setter
+    // Getters and Setters
+
 
     public Integer getIdOrden() {
-        return IdOrden;
+        return idOrden;
     }
 
     public void setIdOrden(Integer idOrden) {
-        IdOrden = idOrden;
+        this.idOrden = idOrden;
     }
 
     public LocalDateTime getFechaCreacion() {

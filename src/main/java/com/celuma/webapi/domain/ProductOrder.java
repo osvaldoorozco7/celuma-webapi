@@ -1,5 +1,8 @@
 package com.celuma.webapi.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class ProductOrder {
 
     private int productOrderId;
@@ -10,8 +13,8 @@ public class ProductOrder {
 
     private OrderDetailDTO orderDetailDTO;
 
+    // Getters and Setters
 
-    // Getterd and Setters
 
     public int getProductOrderId() {
         return productOrderId;
@@ -29,19 +32,19 @@ public class ProductOrder {
         this.quantity = quantity;
     }
 
-    public ProductDTO getProduct() {
+    public ProductDTO getProductDTO() {
         return productDTO;
     }
 
-    public void setProduct(ProductDTO productDTO) {
+    public void setProductDTO(ProductDTO productDTO) {
         this.productDTO = productDTO;
     }
 
-    public OrderDetailDTO getOrder() {
+    public OrderDetailDTO getOrderDetailDTO() {
         return orderDetailDTO;
     }
 
-    public void setOrder(OrderDetailDTO orderDetailDTO) {
+    public void setOrderDetailDTO(OrderDetailDTO orderDetailDTO) {
         this.orderDetailDTO = orderDetailDTO;
     }
 }
