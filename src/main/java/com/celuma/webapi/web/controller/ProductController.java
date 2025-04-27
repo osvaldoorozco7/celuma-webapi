@@ -11,6 +11,7 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,17 @@ public class ProductController {
     private ProductService productService;
     private final Cloudinary cloudinary;
 
-    public ProductController(ProductService productService) {
+    public ProductController(
+            ProductService productService,
+            @Value("${cloudinary.cloud.name}") String cloudName,
+            @Value("${cloudinary.cloud-key}") String apiKey,
+            @Value("${cloudinary.cloud-secret}") String apiSecret
+            ) {
         this.productService= productService;
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
-           "cloud_name", "dsmxi7kye",
-                "api_key", "624551195941554",
-                "api_secret", "0ljhCp_vmXiONV1SQmYGWNnvQn8"
+           "cloud_name", cloudName,
+                "api_key", apiKey,
+                "api_secret", apiSecret
         ));
     };
 
