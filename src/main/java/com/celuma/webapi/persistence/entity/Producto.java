@@ -2,8 +2,6 @@ package com.celuma.webapi.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "products")
 public class Producto {
@@ -28,15 +26,15 @@ public class Producto {
     @Column(name = "cautions")
     private String precauciones;
 
-    @Column( name = "is_deleted")
+    @Column(name = "is_deleted")
     private Boolean estado;
+
+    @Column(name = "image_url")
+    private String urlImagen;
 
     @ManyToOne
     @JoinColumn(name = "category_id", updatable = false, insertable = false)
     private Categoria categorias;
-
-    @OneToMany(mappedBy = "producto")
-    private List<ProductoOrden> ordenes;
 
     // Getters and Setters
 
@@ -96,19 +94,19 @@ public class Producto {
         this.estado = estado;
     }
 
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
+
     public Categoria getCategorias() {
         return categorias;
     }
 
     public void setCategorias(Categoria categorias) {
         this.categorias = categorias;
-    }
-
-    public List<ProductoOrden> getOrdenes() {
-        return ordenes;
-    }
-
-    public void setOrdenes(List<ProductoOrden> ordenes) {
-        this.ordenes = ordenes;
     }
 }

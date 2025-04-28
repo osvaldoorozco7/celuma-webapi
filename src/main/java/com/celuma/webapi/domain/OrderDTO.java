@@ -1,15 +1,18 @@
 package com.celuma.webapi.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 public class OrderDTO {
+
 
     private Integer orderId;
 
     private LocalDateTime creationDate;
 
     private boolean status;
-
 
     // Getters and Setters
 
@@ -36,5 +39,4 @@ public class OrderDTO {
     public void setStatus(boolean status) {
         this.status = status;
     }
-
 }

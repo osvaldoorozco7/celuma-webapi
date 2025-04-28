@@ -1,20 +1,33 @@
 package com.celuma.webapi.domain;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class ProductDTO {
+
     private Integer productId;
+
     private String name;
+
     private Integer categoryId;
+
     private String content;
+
     private String instructions;
+
     private String cautions;
+
     private Boolean active;
 
-    // Getters and setters
+    private String imageUrl;
+
+    // Getters and Setters
 
     public Integer getProductId() {
         return productId;
     }
+
     public void setProductId(Integer productId) {
         this.productId = productId;
     }
@@ -65,5 +78,13 @@ public class ProductDTO {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

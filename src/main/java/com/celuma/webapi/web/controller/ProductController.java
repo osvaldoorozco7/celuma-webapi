@@ -5,23 +5,66 @@ import com.celuma.webapi.domain.ProductDetailDTO;
 import com.celuma.webapi.domain.request_models.NewProductRequest;
 import com.celuma.webapi.service.ProductService;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/products")
 public class ProductController {
+
     @Autowired
     private ProductService productService;
+    private final Cloudinary cloudinary;
+
+    public ProductController(
+            ProductService productService,
+            @Value("${cloudinary.cloud.name}") String cloudName,
+            @Value("${cloudinary.cloud-key}") String apiKey,
+            @Value("${cloudinary.cloud-secret}") String apiSecret
+            ) {
+        this.productService= productService;
+        this.cloudinary = new Cloudinary(ObjectUtils.asMap(
+           "cloud_name", cloudName,
+                "api_key", apiKey,
+                "api_secret", apiSecret
+        ));
+    };
+
+    @PostMapping("/upload-image")
+    public ResponseEntity<String> uploadImage(
+            @RequestParam("file")MultipartFile file,
+            @RequestParam("id")Integer productId) {
+        System.out.println("Filename: " + file.getOriginalFilename());
+        System.out.println("Id: " + productId);
+      try {
+          Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+          String imageUrl = (String) uploadResult.get("secure_url");
+
+          ProductDTO productDTO = new ProductDTO();
+          productDTO.setImageUrl(imageUrl);
+          productDTO.setProductId(productId);
+          productService.uploadImage(productDTO);
+
+          return ResponseEntity.ok("Image uploaded" + imageUrl);
+      } catch (IOException e ) {
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error " + e.getMessage());
+      }
+    };
 
     @GetMapping("/")
     private String home() {

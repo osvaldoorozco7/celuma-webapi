@@ -3,7 +3,6 @@ package com.celuma.webapi.service;
 import com.celuma.webapi.domain.ProductDTO;
 import com.celuma.webapi.domain.ProductDetailDTO;
 import com.celuma.webapi.domain.repository.ProductRepository;
-import com.celuma.webapi.domain.request_models.NewProductRequest;
 import com.celuma.webapi.persistence.entity.Producto;
 import com.celuma.webapi.persistence.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ public class ProductService {
 
     @Autowired
     private ProductMapper mapper;
-
 
 
     public List<ProductDTO> getAll(){
@@ -51,5 +49,9 @@ public class ProductService {
 
     public void  updateProduct(ProductDTO productDTO) {
         productRepository.updateProduct(productDTO);
+    }
+
+    public void uploadImage(ProductDTO productDTO) {
+        productRepository.uploadImage(productDTO);
     }
 }
