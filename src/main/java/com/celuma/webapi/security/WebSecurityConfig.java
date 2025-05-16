@@ -67,7 +67,13 @@ public class WebSecurityConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://productos-celuma.netlify.app/"));
+
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://productos-celuma.netlify.app/"
+        ));
+      
+
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
