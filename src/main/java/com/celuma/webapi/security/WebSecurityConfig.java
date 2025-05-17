@@ -3,6 +3,7 @@ package com.celuma.webapi.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -40,12 +41,11 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF
-                .cors(withDefaults())  // Apply CORS configuration
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/users/login").permitAll()
-                        .requestMatchers("/users/register").permitAll()
-                        .requestMatchers("/products/all").permitAll()
+                        .requestMatchers("/users/login", "/users/register", "/products/all").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
