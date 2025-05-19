@@ -49,8 +49,6 @@ public class ProductController {
     public ResponseEntity<String> uploadImage(
             @RequestParam("file")MultipartFile file,
             @RequestParam("id")Integer productId) {
-        System.out.println("Filename: " + file.getOriginalFilename());
-        System.out.println("Id: " + productId);
       try {
           Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
           String imageUrl = (String) uploadResult.get("secure_url");
